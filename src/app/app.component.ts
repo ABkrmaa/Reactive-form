@@ -15,7 +15,8 @@ export class AppComponent {
   show: boolean = false;
   submitted: boolean = false;
   submittedIndex: number = 0;
-  countEmployee: number=0;
+  countEmployee: number = 0;
+  idEmployee: number = 0;
 
   constructor(private fB: FormBuilder) {
     this.listData = [];
@@ -35,6 +36,20 @@ export class AppComponent {
     })
   }
 
+  countryList: Array<any> = [
+    {country: 'India', states: ['West Bengal', 'karnataka', 'delhi' , 'Chennai']},
+    { country: 'Spain', states: ['Barcelona'] },
+    { country: 'USA', states: ['Downers Grove']},
+    { country: 'Mexico', states: ['Puebla'] },
+    { country: 'China', states: ['Beijing'] },
+  ];
+
+  states: Array<any> = [];
+  
+  changeCountry(count: any) {
+    this.states = this.countryList.find(con => con.name == count).states;
+  }
+
   add(): void {
     this.submitted = true;
     if (this.userForm.value.name != "" && this.userForm.value.email != "") {
@@ -45,9 +60,10 @@ export class AppComponent {
       else {
         this.listData.push(this.userForm.value);
         console.log(this.listData);
-        this.userForm.reset();
+        // this.userForm.reset();
         this.showMessage("Employee added successfully..!");
-        this.countEmployee = this.countEmployee+1;
+        this.countEmployee = this.countEmployee + 1;
+        this.idEmployee++;
       }
 
     }
@@ -69,19 +85,30 @@ export class AppComponent {
     return isUserExists;
   }
 
-  // get email() {
-  //   return this.userForm.get('email');
-  // }
-
   delete(element: any) {
     this.listData.splice(element, 1);
-    this.countEmployee = this.countEmployee-1;
+    this.countEmployee = this.countEmployee - 1;
+    if (this.countEmployee > 0) {
+      this.submittedIndex = 0;
+    }
+    else {
+      this.submittedIndex = -1;
+    }
     this.show = false;
   }
 
   details(index: number) {
     this.show = true;
     this.submittedIndex = index;
+  }
+
+  uniqueId(event: any) {
+    console.log(event);
+
+    if (this.listData.length > 0) {
+      this.listData[this.listData.length -1].empid = event;
+
+    }
   }
 }
 
