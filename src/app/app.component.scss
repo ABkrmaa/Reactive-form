@@ -9,6 +9,7 @@ select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  // background: transparentize($color:#ffffb87a, $amount:0);
 }
 
 input[type=submit] {
@@ -26,6 +27,18 @@ input[type=submit]:hover {
   background-color: #45a049;
 }
 
+section[_ngcontent-skh-c49] {
+  border-radius: 5px;
+  /* background-color: transparent; */
+  padding: 5px;
+}
+
+.progress{
+  width: 100%;
+  background-color: rgb(0, 0, 0);
+  padding: 10px;
+}
+
 div {
   border-radius: 5px;
   background-color:transparent;
@@ -41,7 +54,7 @@ table{
 }
 
 #bg-img {
-  background-image: url("../assets/5590822.jpg");
+  background-image: url("../assets/vecteezy_abstract-art-gold-tropical-leaves-background-vector-luxury_7740967.jpg");
 }
 
 .error {

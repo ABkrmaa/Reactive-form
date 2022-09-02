@@ -4,12 +4,12 @@
     <div class=" mx-auto">
 
       <h1 style="text-align: right;">{{countEmployee}}</h1>
-      <h3>Employee Details Form</h3>
+      <h3>Employee Details Form</h3><br>
       <form class="row" [formGroup]="userForm">
         <div class="col-md-4">
           <label for="name">Name:</label>
           <input type="text" id="name" [class.is-invalid]="userForm.get('name').invalid && userForm.get('name').touched"
-            formControlName="name" class="form-control" placeholder="Enter your name..">
+            formControlName="name" class="form-control" placeholder="Enter your name.." (change)="progressBar()">
           <small *ngIf="userForm.get('name').invalid && userForm.get('name').touched" class="text-danger">Name is
             required</small> <br>
         </div>
@@ -18,22 +18,22 @@
           <label for="age">Age:</label>
           <input type="text" id="age" [class.is-invalid]="userForm.get('age').invalid && userForm.get('age').touched"
             formControlName="age" class="form- control"><br>
-          <small *ngIf="userForm.get('age').invalid && userForm.get('age').touched" class="text-danger">Age is
+          <small *ngIf="userForm.get('age').invalid && userForm.get('age').touched" class="text-danger" (change)="progressBar()">Age is
             required</small> <br>
         </div>
 
         <div class="col-md-1">
           <label for="gender">Gender:</label><br>
-          <input type="radio" id="male" formControlName="gender" value="male">
+          <input type="radio" id="male" formControlName="gender" value="male" (change)="progressBar()">
           <label for="male">Male</label><br>
-          <input type="radio" id="female" formControlName="gender" value="female">
+          <input type="radio" id="female" formControlName="gender" value="female" (change)="progressBar()">
           <label for="female">Female</label><br><br>
         </div>
 
         <div class="col-md-3">
           <label for="dob">Date Of Birth:</label>
           <input type="date" id="dob" [class.is-invalid]="userForm.get('dob').invalid && userForm.get('dob').touched"
-            formControlName="dob" class="form-control" placeholder="Your dob..">
+            formControlName="dob" class="form-control" placeholder="Your dob.." (change)="progressBar()">
           <small *ngIf="userForm.get('dob').invalid && userForm.get('dob').touched" class="text-danger">Dob is
             required</small> <br><br>
         </div>
@@ -42,74 +42,101 @@
           <label>Email:</label>
           <input type="text" id="email"
             [class.is-invalid]="userForm.get('email').invalid && userForm.get('email').touched" formControlName="email"
-            placeholder="Your email.."> <br>
+            placeholder="Your email.." (change)="progressBar()"> <br>
           <small *ngIf="userForm.get('email').invalid && userForm.get('email').touched" class="text-danger">Enter the
             email</small><br>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-2">
           <label for="country">Country:</label>
-          <select type="text" id="state" formControlName="country" class="form-control"  (change)="populateState($event)">
-            <option>Select Country</option>
-            <option  *ngFor="let country of Country" [ngValue]=country>{{country.name}}</option>
+          <select type="text" id="country" formControlName="country" class="form-control" (change)="progressBar()">
+            <option value="">Select Country</option>
+            <option *ngFor="let country of dropdownCountry" [ngValue]=country>{{country.name}}</option>
           </select>
-        <br><br>
+          <small *ngIf="userForm.get('country').invalid && userForm.get('country').touched" class="text-danger">Country
+            is
+            required</small>
+          <br><br>
         </div>
 
-        <div class="col-md-6">
+        <!-- <div class="col-md-6" >
+          <label for="country">Country:</label>
+          <select type="text" id="state" formControlName="country" class="form-control"  >
+            <option>Select Country</option>
+            <option  *ngFor="let country of dropdownCountry" [ngValue]=country>{{country.name}}</option>
+          </select>
+        <br><br>
+        </div> -->
+
+        <div class="col-md-2">
           <label for="state">State:</label>
-          <select type="text" id="state" formControlName="state" class="form-control"  (change)="populateCity($event)">
+          <select type="text" id="state" formControlName="state" class="form-control" (change)="progressBar()">
+            <option value="">Select State</option>
+            <option *ngFor="let s of dropdownState" [ngValue]=s>{{s.name}}</option>
+          </select>
+          <small *ngIf="userForm.get('state').invalid && userForm.get('state').touched" class="text-danger">State is
+            required</small>
+          <br><br>
+        </div>
+
+        <!-- <div class="col-md-6">
+          <label for="state">State:</label>
+          <select type="text" id="state" formControlName="state" class="form-control"  >
             <option value="">Select State</option>
             <option  *ngFor="let s of dropdownState" [ngValue]=s>{{s.name}}</option>
           </select>
         <br><br>
-        </div>
- 
+        </div> -->
 
 
-        <div class="col-md-6">
+        <!-- <div class="col-md-2" [hidden]="displayCity">
           <label for="city">City:</label>
           <select type="text" id="city" formControlName="city" class="form-control" placeholder="select city..">
             <option value="">Select City</option>
-            <option *ngFor="let c of dropdownCity" [ngValue]=c>{{c.name}}</option>
+            <option *ngFor="let city of City" [ngValue]=city>{{city.name}}</option>
           </select>
         <br><br>
+        </div> -->
+
+        <div class="col-md-2" [hidden]="!displayCity">
+          <label for="city">City:</label>
+          <select type="text" id="city" formControlName="city" class="form-control" placeholder="select city.." (change)="progressBar()">
+            <option value="">Select City</option>
+            <option *ngFor="let city of dropdownCity" [ngValue]="city">{{city.name}}</option>
+          </select>
+          <small *ngIf="userForm.get('city').invalid && userForm.get('city').touched" class="text-danger">City is
+            required</small>
+          <br><br>
         </div>
 
-      
 
 
-
-
-
-
-
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label for="address">Address:</label>
           <input type="text" id="address"
             [class.is-invalid]="userForm.get('address').invalid && userForm.get('address').touched"
-            formControlName="address" class="form-control" placeholder="Enter your address..">
+            formControlName="address" class="form-control" placeholder="Enter your address.." (change)="progressBar()">
           <small *ngIf="userForm.get('address').invalid && userForm.get('address').touched" class="text-danger">Address
             is
             required</small> <br><br>
 
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label for="collage">Collage:</label>
           <input type="text" id="collage"
             [class.is-invalid]="userForm.get('collage').invalid && userForm.get('collage').touched"
-            formControlName="collage" class="form-control" placeholder="Enter your collage..">
+            formControlName="collage" class="form-control" placeholder="Enter your collage.." (change)="progressBar()">
           <small *ngIf="userForm.get('collage').invalid && userForm.get('collage').touched" class="text-danger">Collage
             is
             required</small> <br>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-3">
           <label for="branch">Branch:</label>
           <input type="text" id="branch"
             [class.is-invalid]="userForm.get('branch').invalid && userForm.get('branch').touched"
-            formControlName="branch" class="form-control" placeholder="Enter your branch..">
+            formControlName="branch" class="form-control" placeholder="Enter your branch.." (change)="progressBar()">
           <small *ngIf="userForm.get('branch').invalid && userForm.get('branch').touched" class="text-danger">Branch
             is required</small> <br>
         </div>
@@ -117,7 +144,7 @@
         <div class="col-md-3">
           <label for="yop">Year Of Passing:</label>
           <input type="text" id="yop" [class.is-invalid]="userForm.get('yop').invalid && userForm.get('yop').touched"
-            formControlName="yop" class="form-control" placeholder="Enter your year of passing..">
+            formControlName="yop" class="form-control" placeholder="Enter your year of passing.." (change)="progressBar()">
           <small *ngIf="userForm.get('yop').invalid && userForm.get('yop').touched" class="text-danger">Year Of
             Passing is required</small> <br>
         </div>
@@ -125,19 +152,26 @@
         <div class="col-md-3">
           <label for="cgpa">CGPA:</label>
           <input type="text" id="cgpa" [class.is-invalid]="userForm.get('cgpa').invalid && userForm.get('cgpa').touched"
-            formControlName="cgpa" class="form-control" placeholder="Enter your cgpa..">
+            formControlName="cgpa" class="form-control" placeholder="Enter your cgpa.." (change)="progressBar()">
           <small *ngIf="userForm.get('cgpa').invalid && userForm.get('cgpa').touched" class="text-danger">CGPA is
             required</small> <br>
         </div>
 
-        <div>
+        <div class="col-md-3">
           <label for="degree">Degree:</label>
           <input type="text" id="degree"
             [class.is-invalid]="userForm.get('degree').invalid && userForm.get('degree').touched"
-            formControlName="degree" class="form-control" placeholder="Enter your degree..">
-          <small *ngIf="userForm.get('name').invalid && userForm.get('name').touched" class="text-danger">Degree is
+            formControlName="degree" class="form-control" placeholder="Enter your degree.." (change)="progressBar()">
+          <small *ngIf="userForm.get('degree').invalid && userForm.get('degree').touched" class="text-danger">Degree is
             required</small> <br>
         </div>
+
+        <section class="progress">
+          <section class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75"
+            aria-valuemin="0" aria-valuemax="100" *ngIf="proWidth > '0%'" [ngStyle]="{width: proWidth}">{{proWidth}}</section>
+        </section>
+
+
 
         <div class="col-md-12" style="text-align: center;">
           <button type="submit" id="btn" class="btn btn-outline-success" (click)=add()
@@ -180,7 +214,7 @@
           <td>{{item.country.name}}</td>
           <td>{{item.state.name}}</td>
           <td>{{item.city.name}}</td>
-          <td><button class="btn btn-outline-danger" (click)="delete(item)">Delete</button></td>
+          <td><button class="btn btn-outline-danger" (click)="delete(i)">Delete</button></td>
           <td><button class="btn btn-outline-danger" (click)="details(i)">Details</button></td>
 
         </tr>
